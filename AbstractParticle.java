@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public abstract class AbstractParticle {
     double x;
     double y;
@@ -10,4 +12,7 @@ public abstract class AbstractParticle {
         this.speed = speed;
         this.angle = angle;
     }
+    
+    abstract void emission(int toEmit, ArrayList<AbstractParticle> particles);
+    abstract void simulation(ParticleCanvas renderer, double timeStep, ArrayList<AbstractParticle> particles);
 }

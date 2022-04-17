@@ -4,11 +4,14 @@ import javax.swing.SwingWorker;
 
 public class ParticleDriver extends SwingWorker<Integer, Integer> {
     ParticleCanvas renderer;
-    ArrayList<BasicParticle> particles;
+    AbstractParticle particleClass;
+    ArrayList<AbstractParticle> particles;
     
-    public ParticleDriver (ParticleCanvas renderer) {
+    public ParticleDriver (ParticleCanvas renderer, AbstractParticle particle) {
         particles = new ArrayList<>();
         this.renderer = renderer;
+        particleClass = particle;
+        System.out.println(particle + "," + particleClass);
     }
     
     protected void process(List<Integer> chunks) {
@@ -19,7 +22,7 @@ public class ParticleDriver extends SwingWorker<Integer, Integer> {
     // Using a SwingWorker should prevent the gui thread from
     // locking up.
     public Integer doInBackground() {
-        int toEmit = 800;
+        int toEmit = 800; 
         
         // 30 FPS
         double timeStep = (1.0d)/(30.0d);
@@ -32,9 +35,8 @@ public class ParticleDriver extends SwingWorker<Integer, Integer> {
         
         
         while (toEmit > 0 || particles.size() > 0) {
-// TODO: replace explicit references to BasicParticle with something more general
-            BasicParticle.simulation(renderer, timeStep, particles);
-            BasicParticle.emission(toEmit, particles);
+            particleClass.simulation(renderer, timeStep, particles);
+            particleClass.emission(toEmit, particles);
             toEmit -= 40;
             // the property has to change to trigger, idk if I'm doing this right
             publish(frame++);

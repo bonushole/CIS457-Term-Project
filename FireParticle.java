@@ -1,17 +1,20 @@
 import java.util.ArrayList;
 
-public class BasicParticle extends AbstractParticle {
-    BasicParticle(double x, double y, double speed, double angle) {
+public class FireParticle extends AbstractParticle {
+
+	double particleAge = 0;
+
+    FireParticle(double x, double y, double speed, double angle) {
         super(x, y, speed, angle);
     }
     public void emission(int toEmit, ArrayList<AbstractParticle> particles){
     	// just emit 40 per frame for now
     	for (int i = 0; i < 40 && toEmit > 0; i++){
-    		particles.add(new BasicParticle(
+    		particles.add(new FireParticle(
                     0,
                     0,
-                    100 + (Math.random() * 200),
-                    Math.random() * 2 * Math.PI
+                    25 + (Math.random() * 100),
+                    (Math.random() * 2 * Math.PI) % 45
                 ));
                 toEmit--;
     	}
@@ -20,12 +23,12 @@ public class BasicParticle extends AbstractParticle {
     	ArrayList<AbstractParticle> toRemove = new ArrayList<>();
         for (AbstractParticle particle : particles) {
             double dist = particle.speed*timeStep;
-            //System.out.println(dist);
             particle.x += dist*Math.cos(particle.angle);
             particle.y += dist*Math.sin(particle.angle);
-            if (!renderer.fitsOnScreen(particle)) {
+            if (particleAge > 500) {
                 toRemove.add(particle);
             }
+            particleAge += timeStep;
         }
         
         for (AbstractParticle particle : toRemove) {

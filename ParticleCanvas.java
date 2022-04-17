@@ -3,13 +3,13 @@ import java.awt.event.*;
 import java.util.*;
 
 class ParticleCanvas extends Canvas {
-    private ArrayList<BasicParticle> particles = new ArrayList<>();
+    private ArrayList<AbstractParticle> particles = new ArrayList<>();
     
-    public void setParticles(ArrayList<BasicParticle> particles) {
+    public void setParticles(ArrayList<AbstractParticle> particles) {
         this.particles = particles;
     }
     
-    public boolean fitsOnScreen(BasicParticle particle) {
+    public boolean fitsOnScreen(AbstractParticle particle) {
         return Math.abs(particle.x) < (getWidth()/2) && Math.abs(particle.y) < (getHeight()/2);
     }
     
@@ -27,7 +27,8 @@ class ParticleCanvas extends Canvas {
         // TODO: add more advanced rendering, maybe make abstract
         //       Renderer class?
         //System.out.println("painting");
-        for (BasicParticle particle : particles) {
+        g.setColor(Color.blue);
+        for (AbstractParticle particle : particles) {
             //System.out.println(iX(particle.x)+ "  " +iY(particle.y));
             g.drawLine(iX(particle.x), iY(particle.y), iX(particle.x), iY(particle.y));
         }
