@@ -13,14 +13,14 @@ public class Application extends Frame {
       String[] typeNames = {"basic", "fire"};
       // default value avoids errors
       selected = types[0]; 
-      for (int i = 0; i < 2; i++){
-         if (args[0].equals(typeNames[i])){
-         	System.out.println("found it!");
-            selected = types[i];
+      if (args.length > 0) {
+         for (int i = 0; i < 2; i++){
+            if (args[0].equals(typeNames[i])){
+               System.out.println("found it!");
+               selected = types[i];
+            }
          }
       }
-      System.out.println(args[0]);
-      System.out.println(selected);
       new Application();   
    }
 
