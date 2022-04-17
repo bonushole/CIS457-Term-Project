@@ -19,7 +19,6 @@ public class ParticleDriver extends SwingWorker<Integer, Integer> {
     // Using a SwingWorker should prevent the gui thread from
     // locking up.
     public Integer doInBackground() {
-        // TODO: Abstract out simulation and emission from this loop.
         int toEmit = 800;
         
         // 30 FPS
@@ -33,33 +32,10 @@ public class ParticleDriver extends SwingWorker<Integer, Integer> {
         
         
         while (toEmit > 0 || particles.size() > 0) {
-            //System.out.print(".");
-            
-            ArrayList<BasicParticle> toRemove = new ArrayList<>();
-            for (BasicParticle particle : particles) {
-                double dist = particle.speed*timeStep;
-                //System.out.println(dist);
-                particle.x += dist*Math.cos(particle.angle);
-                particle.y += dist*Math.sin(particle.angle);
-                if (!renderer.fitsOnScreen(particle)) {
-                    toRemove.add(particle);
-                }
-            }
-            
-            for (BasicParticle particle : toRemove) {
-                particles.remove(particle);
-            }
-        
-            // just emit 40 per frame for now
-            for (int i = 0; i < 40 && toEmit > 0; i++) {
-                particles.add(new BasicParticle(
-                    0,
-                    0,
-                    100 + (Math.random() * 200),
-                    Math.random() * 2 * Math.PI
-                ));
-                toEmit--;
-            }
+// TODO: replace explicit references to BasicParticle with something more general
+            BasicParticle.simulation(renderer, timeStep, particles);
+            BasicParticle.emission(toEmit, particles);
+            toEmit -= 40;
             // the property has to change to trigger, idk if I'm doing this right
             publish(frame++);
             long toSleep = timeStepMillis - (System.currentTimeMillis() - lastFrame);

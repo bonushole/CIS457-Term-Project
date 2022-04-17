@@ -1,18 +1,13 @@
-abstract class AbstractParticle{
-
-	private int speed;
-	private int[2] range;
-	private int[6] orientations;
-	
-	abstract void setSpeed();
-	abstract int getSpeed();
-	abstract void setRange();
-	abstract int[] getRange();
-	abstract void setOrientations();
-	abstract int[] getOrientations();
-	
-	abstract void emission();
-	abstract void simulation();
-	abstract void display();
-
+public abstract class AbstractParticle {
+    double x;
+    double y;
+    // in pixels per second
+    double speed;
+    double angle;
+    public AbstractParticle(double x, double y, double speed, double angle) {
+        this.x = x;
+        this.y = y;
+        this.speed = speed;
+        this.angle = angle;
+    }
 }
