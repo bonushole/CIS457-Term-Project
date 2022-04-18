@@ -16,20 +16,16 @@ public class BasicParticle extends AbstractParticle {
                 toEmit--;
     	}
     }
-    public void simulation(ParticleCanvas renderer, double timeStep, ArrayList<AbstractParticle> particles){
-    	ArrayList<AbstractParticle> toRemove = new ArrayList<>();
-        for (AbstractParticle particle : particles) {
-            double dist = particle.speed*timeStep;
-            //System.out.println(dist);
-            particle.x += dist*Math.cos(particle.angle);
-            particle.y += dist*Math.sin(particle.angle);
-            if (!renderer.fitsOnScreen(particle)) {
-                toRemove.add(particle);
-            }
+    public boolean simulation(ParticleCanvas renderer, double timeStep, ArrayList<AbstractParticle> particles){
+    
+        double dist = speed*timeStep;
+        //System.out.println(dist);
+        x += dist*Math.cos(angle);
+        y += dist*Math.sin(angle);
+        if (!renderer.fitsOnScreen(this)) {
+            return true;
         }
         
-        for (AbstractParticle particle : toRemove) {
-            particles.remove(particle);
-        }
+        return false;
     }
 }

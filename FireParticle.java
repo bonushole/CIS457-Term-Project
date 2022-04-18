@@ -7,6 +7,7 @@ public class FireParticle extends AbstractParticle {
     FireParticle(double x, double y, double speed, double angle) {
         super(x, y, speed, angle);
     }
+    
     public void emission(int toEmit, ArrayList<AbstractParticle> particles){
     	// just emit 40 per frame for now
     	for (int i = 0; i < 40 && toEmit > 0; i++){
@@ -19,20 +20,16 @@ public class FireParticle extends AbstractParticle {
                 toEmit--;
     	}
     }
-    public void simulation(ParticleCanvas renderer, double timeStep, ArrayList<AbstractParticle> particles){
-    	ArrayList<AbstractParticle> toRemove = new ArrayList<>();
-        for (AbstractParticle particle : particles) {
-            double dist = particle.speed*timeStep;
-            particle.x += dist*Math.cos(particle.angle);
-            particle.y += dist*Math.sin(particle.angle);
-            if (particleAge > 500) {
-                toRemove.add(particle);
-            }
-            particleAge += timeStep;
+    
+    public boolean simulation(ParticleCanvas renderer, double timeStep, ArrayList<AbstractParticle> particles){
+        double dist = speed*timeStep;
+        x += dist*Math.cos(angle);
+        y += dist*Math.sin(angle);
+        if (particleAge > 1.0) {
+            
+            return true;
         }
-        
-        for (AbstractParticle particle : toRemove) {
-            particles.remove(particle);
-        }
+        particleAge += timeStep;
+        return false;
     }
 }

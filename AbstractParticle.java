@@ -14,5 +14,5 @@ public abstract class AbstractParticle {
     }
     
     abstract void emission(int toEmit, ArrayList<AbstractParticle> particles);
-    abstract void simulation(ParticleCanvas renderer, double timeStep, ArrayList<AbstractParticle> particles);
+    abstract boolean simulation(ParticleCanvas renderer, double timeStep, ArrayList<AbstractParticle> particles);
 }

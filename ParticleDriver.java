@@ -35,7 +35,16 @@ public class ParticleDriver extends SwingWorker<Integer, Integer> {
         
         
         while (toEmit > 0 || particles.size() > 0) {
-            particleClass.simulation(renderer, timeStep, particles);
+            ArrayList<AbstractParticle> toRemove = new ArrayList<>();
+            for (AbstractParticle particle : particles) {
+                boolean shouldRemove = particle.simulation(renderer, timeStep, particles);
+                if (shouldRemove) {
+                    toRemove.add(particle);
+                }
+            }
+            for (AbstractParticle particle : toRemove) {
+                particles.remove(particle);
+            }
             particleClass.emission(toEmit, particles);
             toEmit -= 40;
             // the property has to change to trigger, idk if I'm doing this right
