@@ -1,36 +1,42 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
+import java.awt.image.BufferedImage;
 
 class ParticleCanvas extends Canvas {
-    private ArrayList<AbstractParticle> particles = new ArrayList<>();
+    private int width;
+    private int height;
     
-    public void setParticles(ArrayList<AbstractParticle> particles) {
-        this.particles = particles;
+    ParticleCanvas(int width, int height) {
+        this.width = width;
+        this.height = height;
+        System.out.println("width " + width + " height " + height);
     }
     
     public boolean fitsOnScreen(AbstractParticle particle) {
-        return Math.abs(particle.x) < (getWidth()/2) && Math.abs(particle.y) < (getHeight()/2);
+        return Math.abs(particle.x) < (width/2) && Math.abs(particle.y) < (height/2);
     }
     
     // Origin is at (0, 0)
     
     private int iX(double x) {
-        return getWidth()/2 + ((int)x);
+        return width/2 + ((int)x);
     }
     
     private int iY(double y) {
-        return getHeight()/2 + ((int)y);
+        return height/2 + ((int)y);
     }
     
-    public void paint(Graphics g) {
-        // TODO: add more advanced rendering, maybe make abstract
-        //       Renderer class?
-        //System.out.println("painting");
+    public BufferedImage render(Collection<AbstractParticle> particles) {
+        BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_BGR);
+        Graphics g = result.createGraphics();
+        g.setColor(Color.WHITE);
+        g.fillRect(0, 0, width, height);
         g.setColor(Color.blue);
         for (AbstractParticle particle : particles) {
-            //System.out.println(iX(particle.x)+ "  " +iY(particle.y));
             g.drawLine(iX(particle.x), iY(particle.y), iX(particle.x), iY(particle.y));
         }
+        g.dispose();
+        return result;
     }
 }

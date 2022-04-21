@@ -1,22 +1,25 @@
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.SwingWorker;
+import java.awt.image.BufferedImage;
 
-public class ParticleDriver extends SwingWorker<Integer, Integer> {
+public class ParticleDriver extends SwingWorker<Integer, BufferedImage> {
     ParticleCanvas renderer;
     AbstractParticle particleClass;
     ArrayList<AbstractParticle> particles;
+    DisplayWindow display;
     
-    public ParticleDriver (ParticleCanvas renderer, AbstractParticle particle) {
+    public ParticleDriver (DisplayWindow display, AbstractParticle particle) {
         particles = new ArrayList<>();
-        this.renderer = renderer;
+        this.renderer = new ParticleCanvas(500, 500);
+        this.display = display;
         particleClass = particle;
         System.out.println(particle + "," + particleClass);
     }
     
-    protected void process(List<Integer> chunks) {
-        renderer.setParticles(particles);
-        renderer.repaint();
+    protected void process(List<BufferedImage> chunks) {
+        display.image = chunks.get(chunks.size() - 1);
+        display.repaint();
     }
     
     // Using a SwingWorker should prevent the gui thread from
@@ -48,7 +51,8 @@ public class ParticleDriver extends SwingWorker<Integer, Integer> {
             particleClass.emission(toEmit, particles);
             toEmit -= 40;
             // the property has to change to trigger, idk if I'm doing this right
-            publish(frame++);
+            BufferedImage rendered = renderer.render(particles);
+            publish(rendered);
             long toSleep = timeStepMillis - (System.currentTimeMillis() - lastFrame);
             // we're on a worker thread so we can do this (but should we???)
             if (lastFrame > 0 && toSleep > 0) {

@@ -28,7 +28,7 @@ public class Application extends Frame {
    
    Application() {
       
-      ParticleCanvas canvas = new ParticleCanvas();
+      DisplayWindow canvas = new DisplayWindow();
       System.out.println("aeiou " + selected);
       driver = new ParticleDriver(canvas, selected);
       addWindowListener(new WindowAdapter() {
