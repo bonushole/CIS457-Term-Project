@@ -32,8 +32,8 @@ class ParticleCanvas extends Canvas {
         Graphics g = result.createGraphics();
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, width, height);
-        g.setColor(Color.blue);
         for (AbstractParticle particle : particles) {
+        	g.setColor(particle.color); // this supports changing effect colors on the fly
             g.drawLine(iX(particle.x), iY(particle.y), iX(particle.x), iY(particle.y));
         }
         g.dispose();

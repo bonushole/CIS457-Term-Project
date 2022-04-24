@@ -1,11 +1,12 @@
 import java.util.ArrayList;
+import java.awt.Color;
 
 public class FireParticle extends AbstractParticle {
 
 	double particleAge = 0;
 
-    FireParticle(double x, double y, double speed, double angle) {
-        super(x, y, speed, angle);
+    FireParticle(double x, double y, double speed, double angle, Color color) {
+        super(x, y, speed, angle, color);
     }
     
     public void emission(int toEmit, ArrayList<AbstractParticle> particles){
@@ -15,7 +16,8 @@ public class FireParticle extends AbstractParticle {
                     0,
                     50,
                     25 + (Math.random() * 100),
-                    (Math.random() * 2 * Math.PI)
+                    (Math.random() * 2 * Math.PI),
+                    Color.orange
                 ));
                 toEmit--;
     	}

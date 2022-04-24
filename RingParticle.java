@@ -1,8 +1,9 @@
 import java.util.ArrayList;
+import java.awt.Color;
 
 public class RingParticle extends AbstractParticle {
-    RingParticle(double x, double y, double speed, double angle) {
-        super(x, y, speed, angle);
+    RingParticle(double x, double y, double speed, double angle, Color color) {
+        super(x, y, speed, angle, color);
     }
     public void emission(int toEmit, ArrayList<AbstractParticle> particles){
     	// just emit 40 per frame for now
@@ -11,7 +12,8 @@ public class RingParticle extends AbstractParticle {
                     0,
                     0,
                     30,
-                    Math.random() * 2 * Math.PI
+                    Math.random() * 2 * Math.PI,
+                    Color.black
                 ));
                 toEmit--;
     	}

@@ -1,19 +1,21 @@
 import java.util.ArrayList;
+import java.awt.Color;
 
 public class WaterParticle extends AbstractParticle {
    
-    WaterParticle(double x, double y, double speed, double angle) {
-        super(x, y, speed, angle);
+    WaterParticle(double x, double y, double speed, double angle, Color color) {
+        super(x, y, speed, angle, color);
     }
     
     public void emission(int toEmit, ArrayList<AbstractParticle> particles){
     	// just emit 40 per frame for now
     	for (int i = 0; i < 40 && toEmit > 0; i++){
     		particles.add(new WaterParticle(
-                    -90,
+                    -90.0,
                     0,
                     100 + (Math.random() * 200),
-                    (Math.random() * 2 * Math.PI) % 5
+                    (Math.random() * 2 * Math.PI) % 5,
+                    Color.blue
                 ));
                 toEmit--;
     	}

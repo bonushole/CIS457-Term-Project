@@ -1,20 +1,22 @@
 import java.util.ArrayList;
+import java.awt.Color;
 
 public class GravityParticle extends AbstractParticle {
 
 	int iter = 0;
 	
-    GravityParticle(double x, double y, double speed, double angle) {
-        super(x, y, speed, angle);
+    GravityParticle(double x, double y, double speed, double angle, Color color) {
+        super(x, y, speed, angle, color);
     }
     public void emission(int toEmit, ArrayList<AbstractParticle> particles){
     	// just emit 40 per frame for now
     	for (int i = 0; i < 40 && toEmit > 0; i++){
     		particles.add(new GravityParticle(
-                    0,
+                    0.0,
                     -100,
                     100 + Math.random()*100,
-                    Math.random() * 2 * Math.PI
+                    Math.random() * 2 * Math.PI,
+                    Color.black
                 ));
                 toEmit--;
     	}

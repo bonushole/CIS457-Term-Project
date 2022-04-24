@@ -7,12 +7,12 @@ public class Application extends Frame {
    public static void main(String[] args) {
       // explicitly declared array of all AbstractParticle implementations which matches to a list of strings in the same order.
       // probably the worst way to do this?
-      AbstractParticle basic = new BasicParticle(0.0, 0.0, 0.0, 0.0);
-      AbstractParticle fire = new FireParticle(0.0, 0.0, 0.0, 0.0);
-      AbstractParticle water = new WaterParticle(0.0, 0.0, 0.0, 0.0);
-      AbstractParticle ring = new RingParticle(0.0, 0.0, 0.0, 0.0);
-      AbstractParticle gravity = new GravityParticle(0.0, 0.0, 0.0, 0.0);
-      AbstractParticle tbeam = new TractorBeamParticle(0.0, 0.0, 0.0, 0.0);
+      AbstractParticle basic = new BasicParticle(0.0, 0.0, 0.0, 0.0, Color.black);
+      AbstractParticle fire = new FireParticle(0.0, 0.0, 0.0, 0.0, Color.orange);
+      AbstractParticle water = new WaterParticle(0.0, 0.0, 0.0, 0.0, Color.blue);
+      AbstractParticle ring = new RingParticle(0.0, 0.0, 0.0, 0.0, Color.black);
+      AbstractParticle gravity = new GravityParticle(0.0, 0.0, 0.0, 0.0, Color.black);
+      AbstractParticle tbeam = new TractorBeamParticle(0.0, 0.0, 0.0, 0.0, Color.green);
       AbstractParticle[] types = {basic, fire, water, ring, gravity, tbeam};
       String[] typeNames = {"basic", "fire", "water", "ring", "gravity", "tractor-beam"};
       // default value avoids errors
