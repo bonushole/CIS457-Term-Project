@@ -13,9 +13,9 @@ public class FireParticle extends AbstractParticle {
     	for (int i = 0; i < 40 && toEmit > 0; i++){
     		particles.add(new FireParticle(
                     0,
-                    0,
+                    50,
                     25 + (Math.random() * 100),
-                    (Math.random() * 2 * Math.PI) % 0.5
+                    (Math.random() * 2 * Math.PI)
                 ));
                 toEmit--;
     	}
@@ -24,8 +24,8 @@ public class FireParticle extends AbstractParticle {
     public boolean simulation(ParticleCanvas renderer, double timeStep, ArrayList<AbstractParticle> particles){
         double dist = speed*timeStep;
         x += dist*Math.cos(angle);
-        y += dist*Math.sin(angle);
-        if (particleAge > 2.0) {
+        y += (dist*Math.sin(angle) - 5*(particleAge));
+        if (particleAge > 1.0) {
             
             return true;
         }
