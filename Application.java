@@ -9,12 +9,16 @@ public class Application extends Frame {
       // probably the worst way to do this?
       AbstractParticle basic = new BasicParticle(0.0, 0.0, 0.0, 0.0);
       AbstractParticle fire = new FireParticle(0.0, 0.0, 0.0, 0.0);
-      AbstractParticle[] types = {basic, fire};
-      String[] typeNames = {"basic", "fire"};
+      AbstractParticle water = new WaterParticle(0.0, 0.0, 0.0, 0.0);
+      AbstractParticle ring = new RingParticle(0.0, 0.0, 0.0, 0.0);
+      AbstractParticle gravity = new GravityParticle(0.0, 0.0, 0.0, 0.0);
+      AbstractParticle tbeam = new TractorBeamParticle(0.0, 0.0, 0.0, 0.0);
+      AbstractParticle[] types = {basic, fire, water, ring, gravity, tbeam};
+      String[] typeNames = {"basic", "fire", "water", "ring", "gravity", "tractor-beam"};
       // default value avoids errors
       selected = types[0]; 
       if (args.length > 0) {
-         for (int i = 0; i < 2; i++){
+         for (int i = 0; i < 6; i++){
             if (args[0].equals(typeNames[i])){
                System.out.println("found it!");
                selected = types[i];

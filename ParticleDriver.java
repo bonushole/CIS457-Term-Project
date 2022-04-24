@@ -25,7 +25,7 @@ public class ParticleDriver extends SwingWorker<Integer, BufferedImage> {
     // Using a SwingWorker should prevent the gui thread from
     // locking up.
     public Integer doInBackground() {
-        int toEmit = 800; 
+        int toEmit = 2400; 
         
         // 30 FPS
         double timeStep = (1.0d)/(30.0d);
