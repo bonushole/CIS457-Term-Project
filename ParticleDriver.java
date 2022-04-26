@@ -8,11 +8,13 @@ public class ParticleDriver extends SwingWorker<Integer, BufferedImage> {
     AbstractParticle particleClass;
     ArrayList<AbstractParticle> particles;
     DisplayWindow display;
+    Runnable whenFinished;
     
-    public ParticleDriver (DisplayWindow display, AbstractParticle particle) {
+    public ParticleDriver (DisplayWindow display, AbstractParticle particle, Runnable whenFinished) {
         particles = new ArrayList<>();
         this.renderer = new ParticleCanvas(500, 500);
         this.display = display;
+        this.whenFinished = whenFinished;
         particleClass = particle;
         System.out.println(particle + "," + particleClass);
     }
@@ -38,6 +40,9 @@ public class ParticleDriver extends SwingWorker<Integer, BufferedImage> {
         
         
         while (toEmit > 0 || particles.size() > 0) {
+            if (isCancelled()) {
+                break;
+            }
             ArrayList<AbstractParticle> toRemove = new ArrayList<>();
             for (AbstractParticle particle : particles) {
                 boolean shouldRemove = particle.simulation(renderer, timeStep, particles);
@@ -63,5 +68,9 @@ public class ParticleDriver extends SwingWorker<Integer, BufferedImage> {
             lastFrame = System.currentTimeMillis();
         }
         return 0;
+    }
+    
+    protected void done() {
+        whenFinished.run();
     }
 }
