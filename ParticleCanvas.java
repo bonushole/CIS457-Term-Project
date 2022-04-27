@@ -10,7 +10,6 @@ class ParticleCanvas extends Canvas {
     ParticleCanvas(int width, int height) {
         this.width = width;
         this.height = height;
-        System.out.println("width " + width + " height " + height);
     }
     
     public boolean fitsOnScreen(AbstractParticle particle) {

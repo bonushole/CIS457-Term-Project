@@ -27,19 +27,18 @@ public class ParticleDriver extends SwingWorker<Integer, BufferedImage> {
     // Using a SwingWorker should prevent the gui thread from
     // locking up.
     public Integer doInBackground() {
-        int toEmit = 2400; 
+        int emissionSteps = 60; 
         
         // 30 FPS
-        double timeStep = (1.0d)/(30.0d);
+        double timeStep = (1.0d)/(50.0d);
         long timeStepMillis = (long)(timeStep * 1000);
         //System.out.println(timeStepMillis);
         long lastFrame = -1;
-        System.out.println("ummmm");
         int frame = 0;
+        int step = 0;
         
         
-        
-        while (toEmit > 0 || particles.size() > 0) {
+        while (step < emissionSteps || particles.size() > 0) {
             if (isCancelled()) {
                 break;
             }
@@ -53,8 +52,10 @@ public class ParticleDriver extends SwingWorker<Integer, BufferedImage> {
             for (AbstractParticle particle : toRemove) {
                 particles.remove(particle);
             }
-            particleClass.emission(toEmit, particles);
-            toEmit -= 40;
+            if (step < emissionSteps) {
+                particleClass.emission(particles);
+            }
+            step++;
             // the property has to change to trigger, idk if I'm doing this right
             BufferedImage rendered = renderer.render(particles);
             publish(rendered);

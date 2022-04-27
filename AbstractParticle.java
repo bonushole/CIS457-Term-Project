@@ -7,6 +7,7 @@ public abstract class AbstractParticle {
     // in pixels per second
     double speed;
     double angle;
+    int emissionRate = 40;
     Color color;
     public AbstractParticle(double x, double y, double speed, double angle, Color color) {
         this.x = x;
@@ -16,6 +17,10 @@ public abstract class AbstractParticle {
         this.color = color;
     }
     
-    abstract void emission(int toEmit, ArrayList<AbstractParticle> particles);
+    // TODO should probable have a seperate class called 
+    // AbstractParticle emitter or something since we effectively
+    // use one instance of a particle class to do emission and use
+    // the properties of that instance differently.
+    abstract void emission(ArrayList<AbstractParticle> particles);
     abstract boolean simulation(ParticleCanvas renderer, double timeStep, ArrayList<AbstractParticle> particles);
 }

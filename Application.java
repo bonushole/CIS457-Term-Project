@@ -3,13 +3,15 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.util.*;
 
-public class Application extends Frame {
+public class Application extends JFrame {
     public static void main(String[] args) {
         new Application(args.length > 0? args[0] : "");   
     }
 
     ParticleDriver driver;
     JComboBox<String> typeBox;
+    JSlider speedSlider;
+    JSlider emissionRateSlider;
     final static String[] typeNames = {"basic", "fire", "water", "ring", "gravity", "tractor-beam"};
     DisplayWindow canvas;
 
@@ -20,23 +22,52 @@ public class Application extends Frame {
         public void windowClosing(WindowEvent e) {System.exit(0);}
         });
         setSize(700, 500);
-        setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
-        add(canvas);
+        Container contentPane = getContentPane();
+        contentPane.setLayout(new BorderLayout());
+        
+        contentPane.add(canvas, BorderLayout.LINE_START);
+        
         JPanel controlPanel = new JPanel();
         controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.PAGE_AXIS));
         typeBox = new JComboBox<>(typeNames);
+        controlPanel.add(typeBox);
+        
+        speedSlider = new JSlider();
+        controlPanel.add(createLabelAndControl("speed", speedSlider));
+        
+        emissionRateSlider = new JSlider();
+        controlPanel.add(createLabelAndControl("emission rate", emissionRateSlider));
+        
+        controlPanel.add(Box.createVerticalGlue());
+        //contentPane.add(Box.createHorizontalGlue());
+        contentPane.add(controlPanel, BorderLayout.CENTER);
+        
         typeBox.addActionListener(e -> {
             driver.cancel(true);
         });
-        controlPanel.add(typeBox);
-        add(controlPanel);
-        setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+        speedSlider.addChangeListener(e -> {
+            driver.cancel(true);
+        });
+        emissionRateSlider.addChangeListener(e -> {
+            driver.cancel(true);
+        });
         setVisible(true);
+        revalidate();
         driver.execute();
+    }
+    
+    private JPanel createLabelAndControl(String labelText, Component control) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
+        panel.add(new JLabel(labelText));
+        panel.add(control);
+        return panel;
     }
     
     private void spawnNewDriver() {
         AbstractParticle particle = fromName(typeBox.getSelectedItem().toString());
+        particle.speed = ((double)(speedSlider.getValue() - speedSlider.getMinimum()))/((double)((speedSlider.getMaximum() - speedSlider.getMinimum())));
+        particle.emissionRate = 5 + emissionRateSlider.getValue();
         driver = new ParticleDriver(canvas, particle, this::spawnNewDriver);
         driver.execute();
     }
@@ -55,7 +86,6 @@ public class Application extends Frame {
         
         for (int i = 0; i < 6; i++){
             if (name.equals(typeNames[i])){
-               System.out.println("found it!");
                return types[i];
             }
         }

@@ -5,17 +5,16 @@ public class RingParticle extends AbstractParticle {
     RingParticle(double x, double y, double speed, double angle, Color color) {
         super(x, y, speed, angle, color);
     }
-    public void emission(int toEmit, ArrayList<AbstractParticle> particles){
+    public void emission(ArrayList<AbstractParticle> particles){
     	// just emit 40 per frame for now
-    	for (int i = 0; i < 40 && toEmit > 0; i++){
+    	for (int i = 0; i < emissionRate; i++){
     		particles.add(new RingParticle(
                     0,
                     0,
-                    30,
+                    10 + (speed * 20),
                     Math.random() * 2 * Math.PI,
                     Color.black
                 ));
-                toEmit--;
     	}
     }
     public boolean simulation(ParticleCanvas renderer, double timeStep, ArrayList<AbstractParticle> particles){
